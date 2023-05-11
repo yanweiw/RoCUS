@@ -41,14 +41,19 @@ class DSController(Controller):
 			print('WARNING: Not turning off lidar on env could be significantly slower')
 			self.warned = True
 		try:
-			self.modulator.set_arena(env.arena)
+			self.modulator.set_arena(env.arena, target=env.target_pos)
 			epsilon = sys.float_info.epsilon
 			done = False
 			s = env.s()[:2]
 			traj = [s]
 			while not done:
 				d = self.modulator.modulate(s)
-				d = d / max([0.3, d[0] + epsilon, d[1] + epsilon])
+				# d = d / 5
+				d_norm = np.linalg.norm(d)
+				max_step_size = (env.arena.grid_bd / 100)*4
+				if d_norm > max_step_size:
+					d = d / d_norm * max_step_size
+				# d = d / max([0.3, d[0] + epsilon, d[1] + epsilon])
 				s, _, done, _ = env.step(d)
 				s = s[:2]
 				traj.append(s)

@@ -195,8 +195,8 @@ class RBF2dGymEnv():
     def step(self, a):
         assert self.t < self.time_limit, 'time limit already exceeded'
         self.t += 1
-        if self.dxy_limit is not None:
-            a = np.clip(a, -1, 1) * self.dxy_limit
+        # if self.dxy_limit is not None:
+        #     a = np.clip(a, -1, 1) * self.dxy_limit
         self.sim.step(a)
         dist = np.linalg.norm(self.target_pos - self.sim.agent_pos())
         ax, ay = self.sim.agent_pos()
