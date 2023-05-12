@@ -185,10 +185,10 @@ class RBF2dGymEnv():
         self.oob_termination = oob_termination
         self.enable_lidar = use_lidar
 
-    def reset(self, obs_override=None):
+    def reset(self, obs_override=None, start=[-1, -1]):
         self.arena.reset(obs_override)
         self.sim = PhysicsSimulator(self.arena)
-        self.sim.reset([-1, -1])
+        self.sim.reset(start)
         self.t = 0
         return self.s()
 

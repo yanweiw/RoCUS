@@ -50,7 +50,7 @@ class DSController(Controller):
 				d = self.modulator.modulate(s)
 				# d = d / 5
 				d_norm = np.linalg.norm(d)
-				max_step_size = (env.arena.grid_bd / 100)*4
+				max_step_size = (env.arena.grid_bd * 2 / 100) * 2
 				if d_norm > max_step_size:
 					d = d / d_norm * max_step_size
 				# d = d / max([0.3, d[0] + epsilon, d[1] + epsilon])
